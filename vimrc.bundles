@@ -460,4 +460,9 @@ Bundle 'Glench/Vim-Jinja2-Syntax'
 " Bundle "thinca/vim-quickrun"
 " nnoremap <F10> :QuickRun<cr>
 
+"##### go def #########
+Bundle 'dgryski/vim-godef'
+let g:godef_split=0
+let g:godef_same_file_in_same_window=1
+
 "------------------------------------------- end of configs --------------------------------------------
