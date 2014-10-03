@@ -533,11 +533,13 @@ endif
 
 " theme主题
 set background=dark
-colorscheme solarized
 set t_Co=256
+let g:solarized_contrast="normal"
+let g:solarized_visibility="normal"
+"colorscheme solarized
 
 "colorscheme molokai
-"colorscheme desert
+colorscheme desert
 
 "设置标记一列的背景颜色和数字一行颜色一致
 hi! link SignColumn   LineNr
