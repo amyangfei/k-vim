@@ -88,6 +88,9 @@ let g:ycm_filetype_blacklist = {
       \ 'gitcommit' : 1,
       \}
 
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+inoremap <C-o> <C-x><C-o>
+
 
 " 代码片段快速插入 (snippets中,是代码片段资源,需要学习)
 Bundle 'SirVer/ultisnips'
