@@ -45,6 +45,7 @@ highlight SyntasticErrorSign guifg=white guibg=black
 
 " 代码自动补全
 "迄今为止用到的最好的自动VIM自动补全插件
+"重启 :YcmRestartServer
 Bundle 'Valloric/YouCompleteMe'
 "youcompleteme  默认tab  s-tab 和自动补全冲突
 "let g:ycm_key_list_select_completion=['<c-n>']
@@ -57,6 +58,8 @@ let g:ycm_use_ultisnips_completer = 1 "提示UltiSnips
 let g:ycm_collect_identifiers_from_comments_and_strings = 1   "注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_tags_files = 1
 
+" let g:ycm_autoclose_preview_window_after_completion = 1
+" let g:ycm_autoclose_preview_window_after_insertion = 1
 
 " 跳转到定义处, 分屏打开
 " let g:ycm_goto_buffer_command = 'horizontal-split'
@@ -76,7 +79,7 @@ if !empty(glob("~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_
 endif
 
 " 直接触发自动补全 insert模式下
-let g:ycm_key_invoke_completion = '<C-Space>'
+" let g:ycm_key_invoke_completion = '<C-Space>'
 " 黑名单,不启用
 let g:ycm_filetype_blacklist = {
       \ 'tagbar' : 1,
@@ -100,21 +103,26 @@ let g:UltiSnipsSnippetsDir = '~/.vim/UltiSnips'
 " 定义存放代码片段的文件夹 .vim/UltiSnips下，使用自定义和默认的，将会的到全局，有冲突的会提示
 " 进入对应filetype的snippets进行编辑
 map <leader>us :UltiSnipsEdit<CR>
-function! g:UltiSnips_Complete()
-    call UltiSnips#ExpandSnippet()
-    if g:ulti_expand_res == 0
-        if pumvisible()
-            return "\<C-n>"
-        else
-            call UltiSnips#JumpForwards()
-            if g:ulti_jump_forwards_res == 0
-               return "\<TAB>"
-            endif
-        endif
+
+" ctrl+j/k 进行选择
+func! g:JInYCM()
+    if pumvisible()
+        return "\<C-n>"
+    else
+        return "\<c-j>"
     endif
-    return ""
 endfunction
-au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+
+func! g:KInYCM()
+    if pumvisible()
+        return "\<C-p>"
+    else
+        return "\<c-k>"
+    endif
+endfunction
+inoremap <c-j> <c-r>=g:JInYCM()<cr>
+au BufEnter,BufRead * exec "inoremap <silent> " . g:UltiSnipsJumpBackwordTrigger . " <C-R>=g:KInYCM()<cr>"
+let g:UltiSnipsJumpBackwordTrigger = "<c-k>"
 
 
 " 自动补全单引号，双引号等
@@ -156,6 +164,12 @@ let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String']
 
 "更高效的移动 [,, + w/fx]
 Bundle 'Lokaltog/vim-easymotion'
+let g:EasyMotion_smartcase = 1
+" let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
+map <Leader><leader>h <Plug>(easymotion-linebackward)
+map <Leader><Leader>j <Plug>(easymotion-j)
+map <Leader><Leader>k <Plug>(easymotion-k)
+map <Leader><leader>l <Plug>(easymotion-lineforward)
 
 Bundle 'vim-scripts/matchit.zip'
 
@@ -194,7 +208,8 @@ let g:multi_cursor_quit_key='<Esc>'
 "################### 功能相关 ###################
 
 " 文件搜索
-Bundle 'kien/ctrlp.vim'
+" change to https://github.com/ctrlpvim/ctrlp.vim
+Bundle 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_map = '<leader>p'
 let g:ctrlp_cmd = 'CtrlP'
 map <leader>f :CtrlPMRU<CR>
@@ -227,6 +242,13 @@ let g:ctrlp_extensions = ['funky']
 Bundle 'tpope/vim-fugitive'
 ":Gdiff  :Gstatus :Gvsplit
 nnoremap <leader>ge :Gdiff<CR>
+" not ready to open
+" <leader>gb maps to :Gblame<CR>
+" <leader>gs maps to :Gstatus<CR>
+" <leader>gd maps to :Gdiff<CR>  和现有冲突
+" <leader>gl maps to :Glog<CR>
+" <leader>gc maps to :Gcommit<CR>
+" <leader>gp maps to :Git push<CR>
 
 " 同git diff,实时展示文件中修改的行
 " 只是不喜欢除了行号多一列, 默认关闭,gs时打开
@@ -363,6 +385,18 @@ Bundle 'majutsushi/tagbar'
 nmap <F9> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 
+" for ruby
+let g:tagbar_type_ruby = {
+    \ 'kinds' : [
+        \ 'm:modules',
+        \ 'c:classes',
+        \ 'd:describes',
+        \ 'C:contexts',
+        \ 'f:methods',
+        \ 'F:singleton methods'
+    \ ]
+\ }
+
 " go语言的tagbar配置
 " 1.install gotags 'go get -u github.com/jstemmer/gotags'
 " 2.make sure `gotags` in you shell PATH, you can call check it with `which gotags`
@@ -395,6 +429,8 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
+
+
 " 去除taglist =>原因: 使用tagbar和ctrlp-funky可以直接快速跳转函数和变量位置,taglist有些多余
 
 "################### 语言相关 ###################
@@ -414,6 +450,14 @@ let python_highlight_all = 1
 " 2.make sure gocode in your path: `which gocode` (add $GOPATH/bin to you $PATH)
 Bundle 'Blackrush/vim-gocode'
 "Bundle 'fatih/vim-go.git'
+
+"###### Ruby #########
+" Bundle 'vim-ruby/vim-ruby'
+" Bundle 'nelstrom/vim-textobj-rubyblock'
+
+" 有bug, 和当前有冲突, 尚未解决, 不要打开
+" Bundle 'tpope/vim-endwise'
+
 
 "###### Markdown #########
 Bundle 'plasticboy/vim-markdown'
@@ -436,27 +480,27 @@ let g:html_indent_style1 = "inc"
 "for jquery
 Bundle 'nono/jquery.vim'
 
-
 "###### emmet HTML complete #########
 "Bundle "mattn/emmet-vim"
 
 "###### vim.less : less 自动更新##########
-"Bundle 'groenewege/vim-less'
-"autocmd BufWritePost *.less :!lessc % > %:p:r.css
+" Bundle 'groenewege/vim-less'
+" autocmd BufWritePost *.less :!lessc % > %:p:r.css
 
 "###### Jinja2 #########
 Bundle 'Glench/Vim-Jinja2-Syntax'
 
 "for css color
 "not work in iterm2 which termianl selection is not xterm-256
-"Bundle 'ap/vim-css-color'
- 
+" Bundle 'ap/vim-css-color'
+
 " 这个有坑, see issue https://github.com/wklken/k-vim/issues/49
 "Bundle 'gorodinskiy/vim-coloresque'
 
 "###### nginx #########
-"Bundle 'evanmiller/nginx-vim-syntax'
+" Bundle 'evanmiller/nginx-vim-syntax'
 
+" 待审查
 " Bundle "thinca/vim-quickrun"
 " nnoremap <F10> :QuickRun<cr>
 

@@ -8,6 +8,7 @@ k-vim
 > 本次更新: 更为强大的tab操作/更全面的自动补全
 
 
+
 详细 [更新日志](https://github.com/wklken/k-vim/blob/master/UPDATE_LOG.md)
 
 
@@ -26,7 +27,7 @@ k-vim
 
     有一定基础的 vimer
 
-
+PS: 服务器端不带插件`k-vim`的简化版本(curl直接设置vimrc即可), 有需要可以直接安装[vim-for-server](https://github.com/wklken/vim-for-server)
 
 ### k-vim使用说明
 
@@ -104,7 +105,7 @@ molokai主题
         # 需要nodejs支持,各个系统安装见文档 https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
 
         #ubuntu
-        sudo apt-get install nodejs
+        sudo apt-get install nodejs npm
         sudo npm install -g jslint
         sudo npm install jshint -g
 
@@ -282,7 +283,8 @@ molokai主题
     ,9     切第9个tab
     ,0     切最后一个tab
 
-    ctrl+l 最近使用两个tab之间切换
+    ,tt 最近使用两个tab之间切换
+    (可修改配置位 ctrl+o,  但是ctrl+o/i为系统光标相关快捷键, 故不采用)
 
     8. buffer操作(不建议, 建议使用ctrlspace插件来操作)
     [b    前一个buffer
@@ -368,6 +370,9 @@ molokai主题
 
     快捷键:
 
+        ctrl+j 选择下一个补全
+        ctrl+k 选择上一个补全
+
         ctrl+n 选择下一个补全
         ctrl+p 选择上一个补全
         回车    选中
@@ -386,9 +391,12 @@ molokai主题
 
     YCM 自动补全会弹提示
 
+        ctrl+j 上一个
+        ctrl+k 下一个
+
         ctrl+n 上一个
         ctrl+p 下一个
-        <tab>  使用片段
+        <tab>  使用片段 -> expand to codes
         ,us    编辑对应文件类型的代码片段
 
     演示
@@ -422,7 +430,7 @@ molokai主题
             -> ,cc      加上注释
             -> ,cu      解开注释
             -> ,c<space> 加上/解开注释
-            -> ,cy      先复制再注解, p可以黏贴未注释前的代码
+            -> ,cy      先复制再注解, p可以粘贴未注释前的代码
 
     演示
 
@@ -453,6 +461,9 @@ molokai主题
 
         cst"
         <a>abc</a>  -> "abc"
+
+        ys$" 当前到行尾, 引号引住
+
 
 
     演示
@@ -486,10 +497,16 @@ molokai主题
 
     必装，效率提升杀手锏，跳转到光标后任意位置
 
+    easymothion主要用于快速查找跳转, 今天看了支持jk快速跳转(支持多字母搜索跳转不过我认为太重了)
+
     配置(我的leader键配置 let g:mapleader = ',')
 
         ,, + w  跳转
         ,, + fe  查找'e',快速跳转定位到某个字符位置
+        ,,j      快速决定移动到下面哪行(比用行号/j移动快)
+        ,,k      快速移动到上面哪行
+        ,,l      本行, 向后快速移动
+        ,,h      本行, 向前快速移动
 
     演示
 
@@ -548,7 +565,7 @@ molokai主题
 
    后面几个扩展对象的依赖
 
-   更多其他扩展,建 [wiki](https://github.com/kana/vim-textobj-user/wiki)
+   更多其他扩展,见 [wiki](https://github.com/kana/vim-textobj-user/wiki)
 
    PS: 特希望有一个扩展支持 '' "" [] {} ()
 
@@ -765,6 +782,8 @@ src="https://raw.github.com/szw/vim-ctrlspace/master/gfx/screen_small.png" />
 
 1. ####Python
 
+    Vim as a Python IDE, but much more than that!
+
     语法高亮[python-syntax](https://github.com/hdima/python-syntax)
 
     使用Python建议安装，python语法高亮,就是python.vim,在github,有维护和更新
@@ -832,6 +851,9 @@ src="https://raw.github.com/szw/vim-ctrlspace/master/gfx/screen_small.png" />
     可以参考tpope的插件列表,很多跟ruby相关
 
     [tpope/vim-rails](https://github.com/tpope/vim-rails) 未配置
+    [nelstrom/vim-textobj-rubyblock](https://github.com/nelstrom/vim-textobj-ruby)
+
+    这个有坑, 暂未搞定
     [tpope/vim-endwise](https://github.com/tpope/vim-endwise) 未配置,自动加end
 
 7. ####PHP
@@ -893,6 +915,9 @@ version: 8.0
 
     11. 重写README
 
+    12. easymothion
+        增加快速hjkl移动快捷键
+
 
 
 ### Contributors
@@ -928,7 +953,7 @@ thx a lot. 可以给我提pull request:)
 
 ### Resources
 
-待增加blog[]
+[链接](http://www.wklken.me/posts/2014/10/03/vim-resources.html)
 
 ### Donation
 
