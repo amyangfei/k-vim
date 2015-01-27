@@ -520,5 +520,5 @@ highlight SpellLocal term=underline cterm=underline
 "" others
 highlight ColorColumn ctermbg=235 guibg=#2c2d27
 let &colorcolumn=join(range(81,81),",")
-nnoremap zz :q<ENTER>
+nnoremap qq :q<ENTER>
 
