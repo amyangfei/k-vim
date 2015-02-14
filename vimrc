@@ -188,8 +188,6 @@ set smarttab      " insert tabs on the start of a line according to shiftwidth, 
 set expandtab     " 将Tab自动转化成空格    [需要输入真正的Tab键时，使用 Ctrl+V + Tab]
 set shiftround    " 缩进时，取整 use multiple of shiftwidth when indenting with '<' and '>'
 
-" A buffer becomes hidden when it is abandoned
-set hidden
 set wildmode=list:longest
 set ttyfast
 
@@ -522,4 +520,15 @@ highlight ColorColumn ctermbg=235 guibg=#2c2d27
 let &colorcolumn=join(range(81,81),",")
 nnoremap qq :q<ENTER>
 set clipboard=unnamed
+
+"" szw/vim-ctrlspace configuration
+let g:ctrlspace_default_mapping_key="<Space>"
+hi CtrlSpaceSelected term=reverse ctermfg=187  ctermbg=23  cterm=bold
+hi CtrlSpaceNormal   term=NONE    ctermfg=244  ctermbg=232 cterm=NONE
+hi CtrlSpaceSearch   ctermfg=220  ctermbg=NONE cterm=bold
+hi CtrlSpaceStatus   ctermfg=230  ctermbg=234  cterm=NONE
+" A buffer becomes hidden when it is abandoned
+set hidden
+nnoremap <TAB> :bn<CR>
+nnoremap <leader>bd :bd<CR>
 
