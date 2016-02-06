@@ -522,7 +522,7 @@ nnoremap qq :q<ENTER>
 set clipboard=unnamed
 
 "" szw/vim-ctrlspace configuration
-let g:ctrlspace_default_mapping_key="<Space>"
+let g:CtrlSpaceDefaultMappingKey = "<Space>"
 hi CtrlSpaceSelected term=reverse ctermfg=187  ctermbg=23  cterm=bold
 hi CtrlSpaceNormal   term=NONE    ctermfg=244  ctermbg=232 cterm=NONE
 hi CtrlSpaceSearch   ctermfg=220  ctermbg=NONE cterm=bold
