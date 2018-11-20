@@ -409,9 +409,12 @@ Bundle 'hdima/python-syntax'
 let python_highlight_all = 1
 
 "###### Golang #########
-" 1.install golang and install gocode 'go get github.com/nsf/gocode'
-" 2.make sure gocode in your path: `which gocode` (add $GOPATH/bin to you $PATH)
 Bundle 'fatih/vim-go.git'
+let g:go_fmt_command = "goimports"
+let g:go_def_mode = 'godef'
+
+" used for go code autocompletion
+Plugin 'mdempsky/gocode', {'rtp': 'vim/'}
 
 "###### Ruby #########
 " Bundle 'vim-ruby/vim-ruby'
