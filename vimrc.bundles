@@ -410,7 +410,7 @@ let python_highlight_all = 1
 
 "###### Golang #########
 Bundle 'fatih/vim-go.git'
-let g:go_fmt_command = "goimports"
+" let g:go_fmt_command = "goimports"
 let g:go_def_mode = 'godef'
 
 " used for go code autocompletion
@@ -468,5 +468,27 @@ Bundle 'Glench/Vim-Jinja2-Syntax'
 " 待审查
 " Bundle "thinca/vim-quickrun"
 " nnoremap <F10> :QuickRun<cr>
+
+"###### cscope #########
+Bundle "brookhong/cscope.vim"
+let g:cscope_silent=1
+nnoremap <leader>fa :call CscopeFindInteractive(expand('<cword>'))<CR>
+nnoremap <leader>l :call ToggleLocationList()<CR>
+" s: Find this C symbol
+nnoremap  <leader>fs :call CscopeFind('s', expand('<cword>'))<CR>
+" g: Find this definition
+nnoremap  <leader>fg :call CscopeFind('g', expand('<cword>'))<CR>
+" d: Find functions called by this function
+nnoremap  <leader>fd :call CscopeFind('d', expand('<cword>'))<CR>
+" c: Find functions calling this function
+nnoremap  <leader>fc :call CscopeFind('c', expand('<cword>'))<CR>
+" t: Find this text string
+nnoremap  <leader>ft :call CscopeFind('t', expand('<cword>'))<CR>
+" e: Find this egrep pattern
+nnoremap  <leader>fe :call CscopeFind('e', expand('<cword>'))<CR>
+" f: Find this file
+nnoremap  <leader>ff :call CscopeFind('f', expand('<cword>'))<CR>
+" i: Find files #including this file
+nnoremap  <leader>fi :call CscopeFind('i', expand('<cword>'))<CR>
 
 "------------------------------------------- end of configs --------------------------------------------
